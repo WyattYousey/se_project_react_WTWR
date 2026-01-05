@@ -1,0 +1,83 @@
+.modal {
+  position: fixed;
+  visibility: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #0000004d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_type_mobile {
+  position: fixed;
+  bottom: auto;
+  background-color: transparent;
+  padding: 18px;
+}
+
+.modal_opened {
+  visibility: visible;
+}
+
+.modal__container {
+  position: relative;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  border-radius: 20px;
+  border: 1px solid #0000004d;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.modal__container_type_add-garment {
+  max-width: 496px;
+  width: 100%;
+  padding: 28px 28px 36px;
+}
+
+.modal__container_type_preview {
+  padding: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.modal__container_type_mobile {
+  position: relative;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  box-shadow: 0px 2px 8px 0px #0000001a;
+  border-radius: 10px;
+  padding: 60px 40px 40px;
+  width: 100%;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.modal__container_type_delete {
+  max-width: 690px;
+  padding: 60px 125px;
+}
+
+.modal__close {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  background: none;
+  border: none;
+}
+
+.modal__close:hover {
+  opacity: 70%;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .modal__container_type_delete {
+    padding: 40px 50px;
+  }
+}

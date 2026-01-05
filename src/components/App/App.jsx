@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useForm } from "../../hooks/useForm";
 import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
@@ -29,24 +28,22 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [clothingItems, setClothingItems] = useState([]);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
-
-  const { values, setValues, handleChange } = useForm(defaultValues);
-
-  const handleConfirmDelete = () => {
-    setActiveModal("delete");
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = (id) => {
+    setIsLoading(true);
     removeItem(id)
       .then(() => {
         const newData = clothingItems.filter((item) => item._id !== selectedCard._id);
         setClothingItems(newData);
         handleClose();
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(setIsLoading(false));
   };
 
   const handleAddItem = (data) => {
+    setIsLoading(true);
     const newCardData = {
       name: data.name,
       imageUrl: data.imageUrl,
@@ -57,7 +54,17 @@ function App() {
         setClothingItems([data, ...clothingItems]);
         handleClose();
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        handleFormReset(data);
+        setIsLoading(false);
+      });
+  };
+
+  const handleFormReset = (data) => {
+    data.name = "";
+    data.imageUrl = "";
+    data.weather = null;
   };
 
   const handleToggleSwitchChange = () => {
@@ -70,12 +77,15 @@ function App() {
   };
 
   const handleAddClick = () => {
-    setValues(defaultValues);
     setActiveModal("add-garment");
   };
 
   const handleMobileProfileClick = () => {
-    setActiveModal("profile");
+    setActiveModal("mobile");
+  };
+
+  const handleConfirmDelete = () => {
+    setActiveModal("delete");
   };
 
   const handleClose = () => {
@@ -83,6 +93,7 @@ function App() {
   };
 
   useEffect(() => {
+    1;
     getWeather(coordinates, apiKey)
       .then((data) => {
         const filteredData = filterWeatherData(data);
@@ -132,28 +143,32 @@ function App() {
           <Footer />
         </div>
         <AddItemModal
+          modalType={activeModal}
           isOpen={activeModal === "add-garment"}
           handleClose={handleClose}
           handleAddItem={handleAddItem}
-          values={values}
-          handleChange={handleChange}
+          isLoading={isLoading}
         />
         <ItemModal
+          modalType={activeModal}
           isOpen={activeModal === "preview"}
           card={selectedCard}
           handleDeleteClick={handleConfirmDelete}
           handleClose={handleClose}
         />
         <ProfileMobileModal
-          isOpen={activeModal === "profile"}
+          modalType={activeModal}
+          isOpen={activeModal === "mobile"}
           handleClose={handleClose}
           onAddClick={handleAddClick}
         />
         <DeleteModal
+          modalType={activeModal}
           card={selectedCard}
           isOpen={activeModal === "delete"}
           handleClose={handleClose}
           handleDelete={handleDelete}
+          isLoading={isLoading}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>

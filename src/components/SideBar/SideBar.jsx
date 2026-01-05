@@ -8,7 +8,7 @@ export default function SideBar() {
   });
 
   return (
-    <side className="sidebar">
+    <aside className="sidebar">
       {isMobile ? (
         <div className="sidebar__user-wrapper">
           <div className="sidebar__user-settings">
@@ -24,6 +24,6 @@ export default function SideBar() {
           <img src={avatar} alt="Avatar Photo" className="sidebar__avatar" />
         </div>
       )}
-    </side>
+    </aside>
   );
 }

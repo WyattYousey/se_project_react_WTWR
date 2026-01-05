@@ -1,6 +1,10 @@
+import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import { defaultValues } from "../../utils/constants";
 
-const AddItemModal = ({ isOpen, handleAddItem, handleClose, values, handleChange }) => {
+const AddItemModal = ({ isOpen, handleAddItem, handleClose, isLoading, modalType }) => {
+  const { values, setValues, handleChange } = useForm(defaultValues);
+
   function handleSubmit(evt) {
     evt.preventDefault();
     handleAddItem(values);
@@ -8,8 +12,9 @@ const AddItemModal = ({ isOpen, handleAddItem, handleClose, values, handleChange
 
   return (
     <ModalWithForm
+      modalType={modalType}
       name="add-garment"
-      buttonText="Add garment"
+      buttonText={isLoading ? "Adding garment..." : "Add garment"}
       isOpen={isOpen}
       handleClose={handleClose}
       onSubmit={handleSubmit}

@@ -1,4 +1,4 @@
-.modal__content_type_delete {
+.modal__container_type_delete {
   max-width: 690px;
   padding: 60px 125px;
 }
@@ -46,10 +46,4 @@
   cursor: pointer;
   opacity: 70%;
   transition: opacity 0.4s ease-in-out;
-}
-
-@media screen and (max-width: 768px) {
-  .modal__content_type_delete {
-    padding: 40px 50px;
-  }
 }

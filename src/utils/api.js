@@ -8,12 +8,16 @@ export const handleServerResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
 };
 
+const request = (url, options) => {
+  return fetch(url, options).then(handleServerResponse);
+};
+
 export const getItems = () => {
-  return fetch(`${baseUrl}/items`, { headers }).then(handleServerResponse);
+  return request(`${baseUrl}/items`, { headers });
 };
 
 export const addItem = ({ name, imageUrl, weather }) => {
-  return fetch(`${baseUrl}/items`, {
+  return request(`${baseUrl}/items`, {
     method: "POST",
     headers,
     body: JSON.stringify({
@@ -21,12 +25,12 @@ export const addItem = ({ name, imageUrl, weather }) => {
       imageUrl,
       weather,
     }),
-  }).then(handleServerResponse);
+  });
 };
 
 export const removeItem = (itemId) => {
-  return fetch(`${baseUrl}/items/${itemId}`, {
+  return request(`${baseUrl}/items/${itemId}`, {
     method: "DELETE",
     headers,
-  }).then(handleServerResponse);
+  });
 };
