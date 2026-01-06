@@ -14,9 +14,9 @@ import Profile from "../Profile/Profile";
 import ProfileMobileModal from "../ProfileMobileModal/ProfileMobileModal";
 import { addItem, getItems, removeItem } from "../../utils/api";
 import DeleteModal from "../DeleteModal/DeleteModal";
+import { apiKey } from "../../utils/constants";
 
 function App() {
-  const apiKey = import.meta.env.VITE_API_KEY;
   const [weatherData, setWeatherData] = useState({
     type: "",
     temp: { F: 999, C: 999 },
@@ -42,7 +42,7 @@ function App() {
       .finally(setIsLoading(false));
   };
 
-  const handleAddItem = (data) => {
+  const handleAddItem = (data, resetForm) => {
     setIsLoading(true);
     const newCardData = {
       name: data.name,
@@ -52,19 +52,13 @@ function App() {
     addItem(newCardData)
       .then((data) => {
         setClothingItems([data, ...clothingItems]);
+        resetForm();
         handleClose();
       })
       .catch(console.error)
       .finally(() => {
-        handleFormReset(data);
         setIsLoading(false);
       });
-  };
-
-  const handleFormReset = (data) => {
-    data.name = "";
-    data.imageUrl = "";
-    data.weather = null;
   };
 
   const handleToggleSwitchChange = () => {
@@ -93,7 +87,6 @@ function App() {
   };
 
   useEffect(() => {
-    1;
     getWeather(coordinates, apiKey)
       .then((data) => {
         const filteredData = filterWeatherData(data);
