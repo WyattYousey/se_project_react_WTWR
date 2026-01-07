@@ -51,6 +51,7 @@ const AddItemModal = ({ isOpen, handleAddItem, handleClose, isLoading, modalType
 
         <label htmlFor="hot" className="modal__label modal__label_type_radio">
           <input
+            checked={values.weather === "hot"}
             value="hot"
             name="weather"
             type="radio"
@@ -63,6 +64,7 @@ const AddItemModal = ({ isOpen, handleAddItem, handleClose, isLoading, modalType
 
         <label htmlFor="warm" className="modal__label modal__label_type_radio">
           <input
+            checked={values.weather === "warm"}
             value="warm"
             name="weather"
             type="radio"
@@ -75,6 +77,7 @@ const AddItemModal = ({ isOpen, handleAddItem, handleClose, isLoading, modalType
 
         <label htmlFor="cold" className="modal__label modal__label_type_radio">
           <input
+            checked={values.weather === "cold"}
             value="cold"
             name="weather"
             type="radio"

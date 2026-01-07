@@ -1,11 +1,18 @@
 .app {
-    background-color: #f3f3f3;
+  background-color: #f3f3f3;
 }
 
 .page__content {
   max-width: 1360px;
   margin: 0 auto;
   padding: 24px 40px;
+}
+
+.detecting-location {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 12px;
+  text-align: center;
 }
 
 @media screen and (max-width: 768px) {

@@ -6,7 +6,7 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import ItemModal from "../ItemModal/ItemModal";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import { coordinates, defaultValues } from "../../utils/constants";
+import { defaultCoordinates, defaultValues } from "../../utils/constants";
 import Footer from "../Footer/Footer";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
@@ -39,7 +39,7 @@ function App() {
         handleClose();
       })
       .catch(console.error)
-      .finally(setIsLoading(false));
+      .finally(() => setIsLoading(false));
   };
 
   const handleAddItem = (data, resetForm) => {
@@ -87,12 +87,41 @@ function App() {
   };
 
   useEffect(() => {
-    getWeather(coordinates, apiKey)
-      .then((data) => {
-        const filteredData = filterWeatherData(data);
-        setWeatherData(filteredData);
-      })
-      .catch(console.error);
+    const fetchWeatherWithCoords = (coords) => {
+      setIsLoading(true);
+      getWeather(coords, apiKey)
+        .then((data) => {
+          const filteredData = filterWeatherData(data);
+          setWeatherData(filteredData);
+        })
+        .catch(console.error)
+        .finally(() => {
+          setIsLoading(false);
+        });
+    };
+
+    // indicate that location detection is in progress until we fetch weather
+    setIsLoading(true);
+
+    if (typeof navigator !== "undefined" && "geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const coords = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          };
+          fetchWeatherWithCoords(coords);
+        },
+        (error) => {
+          console.error("Geolocation error:", error);
+          fetchWeatherWithCoords(defaultCoordinates);
+        },
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+      );
+    } else {
+      // Geolocation not supported, use fallback
+      fetchWeatherWithCoords(defaultCoordinates);
+    }
 
     getItems()
       .then((data) => {
@@ -106,6 +135,9 @@ function App() {
     <CurrentTemperatureUnitContext.Provider value={{ currentTemperatureUnit, handleToggleSwitchChange }}>
       <div className="app">
         <div className="page__content">
+          {isLoading && weatherData.type === "" && (
+            <div className="detecting-location">Detecting Location...</div>
+          )}
           <Header
             weatherData={weatherData}
             handleAddClick={handleAddClick}

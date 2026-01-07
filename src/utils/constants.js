@@ -80,7 +80,8 @@ export const defaultValues = {
   weather: "",
 };
 
-export const coordinates = {
+// Fallback coordinates used when Geolocation is unavailable or denied
+export const defaultCoordinates = {
   latitude: 36.52,
   longitude: -94.61,
 };
