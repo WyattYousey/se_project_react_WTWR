@@ -6,12 +6,14 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import ItemModal from "../ItemModal/ItemModal";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import { defaultCoordinates, defaultValues } from "../../utils/constants";
+import { defaultCoordinates } from "../../utils/constants";
 import Footer from "../Footer/Footer";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
 import ProfileMobileModal from "../ProfileMobileModal/ProfileMobileModal";
+import RegisterModal from "../RegisterModal/Registermodal";
+import LoginModal from "../LoginModal/LoginModal";
 import { addItem, getItems, removeItem } from "../../utils/api";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import { apiKey } from "../../utils/constants";
@@ -24,7 +26,7 @@ function App() {
     condition: "",
     isDay: false,
   });
-  const [activeModal, setActiveModal] = useState("");
+  const [activeModal, setActiveModal] = useState("user-login");
   const [selectedCard, setSelectedCard] = useState({});
   const [clothingItems, setClothingItems] = useState([]);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -116,7 +118,7 @@ function App() {
           console.error("Geolocation error:", error);
           fetchWeatherWithCoords(defaultCoordinates);
         },
-        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 },
       );
     } else {
       // Geolocation not supported, use fallback
@@ -167,6 +169,20 @@ function App() {
           </Routes>
           <Footer />
         </div>
+        <RegisterModal
+          modalType={activeModal}
+          isOpen={activeModal === "add-user"}
+          handleClose={handleClose}
+          handleAddItem={handleAddItem}
+          isLoading={isLoading}
+        />
+        <LoginModal
+          modalType={activeModal}
+          isOpen={activeModal === "user-login"}
+          handleClose={handleClose}
+          handleAddItem={handleAddItem}
+          isLoading={isLoading}
+        />
         <AddItemModal
           modalType={activeModal}
           isOpen={activeModal === "add-garment"}

@@ -74,10 +74,17 @@ export const defaultWeatherOptions = {
   },
 };
 
-export const defaultValues = {
+export const defaultItemValues = {
   name: "",
   imageUrl: "",
   weather: "",
+};
+
+export const defaultUserValues = {
+  Email: "",
+  password: "",
+  name: "",
+  avatarUrl: "",
 };
 
 // Fallback coordinates used when Geolocation is unavailable or denied
