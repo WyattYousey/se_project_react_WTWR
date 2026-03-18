@@ -2,12 +2,12 @@ import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { defaultUserValues } from "../../utils/constants";
 
-const LoginModal = ({ isOpen, handleAddItem, handleClose, isLoading, modalType }) => {
+const LoginModal = ({ isOpen, signin, handleClose, isLoading, modalType }) => {
   const { values, setValues, handleChange, handleReset } = useForm(defaultUserValues);
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    handleAddItem(values, handleReset);
+    signin(values, handleReset);
   }
 
   return (

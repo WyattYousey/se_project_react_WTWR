@@ -2,12 +2,12 @@ import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { defaultUserValues } from "../../utils/constants";
 
-const RegisterModal = ({ isOpen, handleAddItem, handleClose, isLoading, modalType }) => {
+const RegisterModal = ({ isOpen, signup, handleClose, isLoading, modalType }) => {
   const { values, setValues, handleChange, handleReset } = useForm(defaultUserValues);
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    handleAddItem(values, handleReset);
+    signup(values, handleReset);
   }
 
   return (
@@ -59,15 +59,15 @@ const RegisterModal = ({ isOpen, handleAddItem, handleClose, isLoading, modalTyp
           onChange={handleChange}
         />
       </label>
-      <label htmlFor="avatarUrl" className="modal__label">
+      <label htmlFor="avatar" className="modal__label">
         Avatar URL{" "}
         <input
           type="url"
-          name="avatarUrl"
+          name="avatar"
           className="modal__input"
-          id="avatarUrl"
+          id="avatar"
           placeholder="Avatar URL"
-          value={values.avatarUrl}
+          value={values.avatar}
           onChange={handleChange}
         />
       </label>

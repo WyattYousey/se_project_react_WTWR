@@ -81,10 +81,10 @@ export const defaultItemValues = {
 };
 
 export const defaultUserValues = {
-  Email: "",
+  email: "",
   password: "",
   name: "",
-  avatarUrl: "",
+  avatar: "",
 };
 
 // Fallback coordinates used when Geolocation is unavailable or denied
