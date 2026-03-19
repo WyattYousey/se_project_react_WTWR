@@ -5,19 +5,32 @@
   justify-content: center;
 }
 
+.card__title_wrapper {
+  display: flex;
+  position: absolute;
+  top: 15px;
+  place-items: center;
+}
+
 .card__title {
   padding: 2px 12px;
   margin: 0;
-  background-color: #FFFFFF;
   color: #00000099;
-  border-radius: 4px;
-  position: absolute;
-  top: 15px;
   font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 16px;
   line-height: 20px;
+  background-color: #ffffff;
+  border-radius: 4px;
+}
 
+.like-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  border: none;
+  padding: 0;
 }
 
 .card__image {
@@ -28,7 +41,7 @@
   height: 100%;
   border-radius: 20px;
   overflow: hidden;
-  border: 1px solid #0000004D;
+  border: 1px solid #0000004d;
 }
 
 .card__image:hover {

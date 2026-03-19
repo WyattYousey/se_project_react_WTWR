@@ -5,7 +5,17 @@ import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { defaultCoordinates } from "../../utils/constants";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
-import { addItem, getItems, removeItem, signup, signin, getCurrentUser } from "../../utils/api";
+import {
+  addItem,
+  getItems,
+  removeItem,
+  signup,
+  signin,
+  getCurrentUser,
+  editUserProfile,
+  removeCardLike,
+  addCardLike,
+} from "../../utils/api";
 import { apiKey } from "../../utils/constants";
 
 import Header from "../Header/Header";
@@ -21,6 +31,7 @@ import DeleteModal from "../DeleteModal/DeleteModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 import "./App.css";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -117,8 +128,40 @@ function App() {
       });
   };
 
+  const handleUserEditProfile = (data, resetForm) => {
+    setIsLoading(true);
+    editUserProfile(data)
+      .then((res) => {
+        setCurrentUser(res);
+        resetForm();
+        handleClose();
+      })
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const handleCardLike = ({ id, isLiked }) => {
+    !isLiked
+      ? addCardLike(id)
+          .then((updatedCard) => {
+            setClothingItems((cards) => cards.map((item) => (item._id === id ? updatedCard : item)));
+          })
+          .catch((err) => console.log(err))
+      : removeCardLike(id)
+          .then((updatedCard) => {
+            setClothingItems((cards) => cards.map((item) => (item._id === id ? updatedCard : item)));
+          })
+          .catch((err) => console.log(err));
+  };
+
   const handleToggleSwitchChange = () => {
     currentTemperatureUnit === "F" ? setCurrentTemperatureUnit("C") : setCurrentTemperatureUnit("F");
+  };
+
+  const handleEditProfileClick = () => {
+    setActiveModal("edit-profile");
   };
 
   const handleSignUpClick = () => {
@@ -150,19 +193,8 @@ function App() {
     setActiveModal("");
   };
 
-  const setHomePageOnLoad = () => {
-    if (isLoggedIn === true) {
-      setActiveModal("");
-    } else if (isLoggedIn === false && localStorage.getItem("hasAccount") === false) {
-      setActiveModal("add-user");
-    } else if (isLoggedIn === false && localStorage.getItem("hasAccount") === true) {
-      setActiveModal("user-login");
-    }
-  };
-
   useEffect(() => {
     checkCurrentUser();
-    setHomePageOnLoad();
 
     const fetchWeatherWithCoords = (coords) => {
       setIsLoading(true);
@@ -230,6 +262,7 @@ function App() {
                 path="/"
                 element={
                   <Main
+                    onCardLike={handleCardLike}
                     handleCardClick={handleCardClick}
                     weatherData={weatherData}
                     clothingItems={clothingItems}
@@ -241,6 +274,7 @@ function App() {
                 element={
                   <ProtectedRoute isLoggedIn={isLoggedIn}>
                     <Profile
+                      handleEditProfileClick={handleEditProfileClick}
                       handleAddClick={handleAddClick}
                       clothingItems={clothingItems}
                       handleCardClick={handleCardClick}
@@ -263,6 +297,13 @@ function App() {
             isOpen={activeModal === "user-login"}
             handleClose={handleClose}
             signin={login}
+            isLoading={isLoading}
+          />
+          <EditProfileModal
+            modalType={activeModal}
+            isOpen={activeModal === "edit-profile"}
+            handleClose={handleClose}
+            editProfile={handleUserEditProfile}
             isLoading={isLoading}
           />
           <AddItemModal

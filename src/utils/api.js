@@ -70,3 +70,25 @@ export const getCurrentUser = () => {
     ...headers(),
   });
 };
+
+export const editUserProfile = ({ name, avatar }) => {
+  return request(`${baseUrl}/users/me`, {
+    method: "PATCH",
+    ...headers(),
+    body: JSON.stringify({ name, avatar }),
+  });
+};
+
+export const addCardLike = ({ itemId }) => {
+  return request(`${baseUrl}/items/${itemId}/likes`, {
+    method: "PATCH",
+    ...headers(),
+  });
+};
+
+export const removeCardLike = ({ itemId }) => {
+  return request(`${baseUrl}/items/${itemId}/likes`, {
+    method: "DELETE",
+    ...headers(),
+  });
+};

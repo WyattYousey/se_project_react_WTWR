@@ -3,13 +3,12 @@ import "./SideBar.css";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function SideBar() {
+export default function SideBar({ handleEditProfileClick }) {
   const isMobile = useMediaQuery({
     query: "(max-width: 768px)",
   });
 
   const currentUser = useContext(CurrentUserContext);
-  const isLoggedIn = !!currentUser;
   const avatarSrc = currentUser?.avatar;
 
   const avatarContent = avatarSrc ? (
@@ -24,7 +23,9 @@ export default function SideBar() {
         <div className="sidebar__user-wrapper">
           <div className="sidebar__user-settings">
             <p className="sidebar__username sidebar__username_mobile">{currentUser?.name}</p>
-            <button className="sidebar__profile-change">Change profile data</button>
+            <button onClick={handleEditProfileClick} className="sidebar__profile-change">
+              Change profile data
+            </button>
             <button className="sidebar__profile-logout">Log out</button>
           </div>
           {avatarContent}
@@ -36,7 +37,9 @@ export default function SideBar() {
             {avatarContent}
           </div>
           <div className="sidebar__user-settings desktop">
-            <button className="sidebar__profile-change desktop">Change profile data</button>
+            <button onClick={handleEditProfileClick} className="sidebar__profile-change desktop">
+              Change profile data
+            </button>
             <button className="sidebar__profile-logout desktop">Log out</button>
           </div>
         </div>
