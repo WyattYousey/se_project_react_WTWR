@@ -30,7 +30,7 @@ function App() {
     condition: "",
     isDay: false,
   });
-  const [activeModal, setActiveModal] = useState("user-login");
+  const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [clothingItems, setClothingItems] = useState([]);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -39,40 +39,40 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const checkCurrentUser = () => {
-    setIsLoading(true);
-    const token = localStorage.getItem("jwt");
-
-    if (token) {
-      getCurrentUser(token)
-        .then((res) => {
-          if (res) {
-            setIsLoggedIn(true);
-            setCurrentUser(res);
-          } else {
-            setIsLoggedIn(false);
-            setCurrentUser(null);
-          }
-        })
-        .catch(console.error);
-    }
+    if (isLoading === false) setIsLoading(true);
+    getCurrentUser()
+      .then((res) => {
+        if (res) {
+          setIsLoggedIn(true);
+          setCurrentUser(res);
+        }
+      })
+      .catch((err) => {
+        if (err.code === 401) {
+          localStorage.removeItem("jwt");
+          setIsLoggedIn(false);
+          setCurrentUser(null);
+        }
+      })
+      .finally(() => {
+        if (isLoading === true) setIsLoading(false);
+      });
   };
 
   const login = (data, resetForm) => {
-    setIsLoading(true);
+    if (isLoading === false) setIsLoading(true);
     signin(data)
       .then((res) => {
-        if (res) {
-          localStorage.setItem("jwt", res);
-          checkCurrentUser(res);
+        if (res.token) {
+          localStorage.setItem("jwt", res.token);
+          checkCurrentUser();
           handleClose();
           resetForm();
-        } else {
-          throw new Error("No token Provided");
         }
       })
       .catch(console.error)
       .finally(() => {
-        setIsLoading(false);
+        if (isLoading === true) setIsLoading(false);
       });
   };
 
@@ -80,6 +80,7 @@ function App() {
     setIsLoading(true);
     signup(data)
       .then(() => {
+        localStorage.setItem("hasAccount", true);
         login(data, resetForm);
       })
       .catch(console.error);
@@ -120,6 +121,14 @@ function App() {
     currentTemperatureUnit === "F" ? setCurrentTemperatureUnit("C") : setCurrentTemperatureUnit("F");
   };
 
+  const handleSignUpClick = () => {
+    setActiveModal("add-user");
+  };
+
+  const handleLogInClick = () => {
+    setActiveModal("user-login");
+  };
+
   const handleCardClick = (card) => {
     setActiveModal("preview");
     setSelectedCard(card);
@@ -141,7 +150,20 @@ function App() {
     setActiveModal("");
   };
 
+  const setHomePageOnLoad = () => {
+    if (isLoggedIn === true) {
+      setActiveModal("");
+    } else if (isLoggedIn === false && localStorage.getItem("hasAccount") === false) {
+      setActiveModal("add-user");
+    } else if (isLoggedIn === false && localStorage.getItem("hasAccount") === true) {
+      setActiveModal("user-login");
+    }
+  };
+
   useEffect(() => {
+    checkCurrentUser();
+    setHomePageOnLoad();
+
     const fetchWeatherWithCoords = (coords) => {
       setIsLoading(true);
       getWeather(coords, apiKey)
@@ -195,6 +217,10 @@ function App() {
               <div className="detecting-location">Detecting Location...</div>
             )}
             <Header
+              handleSignUpClick={handleSignUpClick}
+              handleLogInClick={handleLogInClick}
+              isLoggedIn={isLoggedIn}
+              currentUser={currentUser}
               weatherData={weatherData}
               handleAddClick={handleAddClick}
               onMobileProfileClick={handleMobileProfileClick}
@@ -254,6 +280,8 @@ function App() {
             handleClose={handleClose}
           />
           <ProfileMobileModal
+            currentUser={currentUser}
+            isLoggedIn={isLoggedIn}
             modalType={activeModal}
             isOpen={activeModal === "mobile"}
             handleClose={handleClose}

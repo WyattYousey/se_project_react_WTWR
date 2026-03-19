@@ -66,6 +66,18 @@
   display: block;
 }
 
+/* ✅ NEW - placeholder avatar */
+.header__avatar-placeholder {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
 .header__nav-link {
   display: flex;
   align-items: center;

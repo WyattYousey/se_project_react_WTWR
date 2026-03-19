@@ -1,3 +1,8 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
 .sidebar__user-wrapper {
   display: flex;
   flex-direction: row-reverse;
@@ -10,6 +15,10 @@
   flex-direction: column;
   text-align: left;
   gap: 8px;
+}
+
+.sidebar__user-settings.desktop {
+  margin-top: 24px;
 }
 
 .sidebar__avatar {
@@ -38,9 +47,14 @@
   background-color: transparent;
   text-align: left;
   font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
-  font-weight: 500;
+  font-weight: 700;
   font-size: 20px;
   color: #00000099;
+}
+
+.sidebar__profile-change.desktop,
+.sidebar__profile-logout.desktop {
+  color: rgb(0, 0, 0);
 }
 
 @media screen and (max-width: 768px) {

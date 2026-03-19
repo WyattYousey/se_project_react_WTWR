@@ -22,7 +22,9 @@ function ModalWithForm({
             {buttonText}
           </button>
           {modalType === "add-user" || modalType === "user-login" ? (
-            <button className="modal__log_in_btn">{secondaryButtonText}</button>
+            <button type="button" className="modal__log_in_btn">
+              {secondaryButtonText}
+            </button>
           ) : (
             <></>
           )}

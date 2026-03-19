@@ -1,17 +1,14 @@
 const baseUrl = "http://localhost:3001";
 
-const headers = {
-  "Content-Type": "application/json",
-};
-
-const protectedHeaders = (token) => {
+function headers() {
+  const token = localStorage.getItem("jwt");
   return {
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
   };
-};
+}
 
 export const handleServerResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
@@ -22,13 +19,17 @@ const request = (url, options) => {
 };
 
 export const getItems = () => {
-  return request(`${baseUrl}/items`, { headers });
+  return request(`${baseUrl}/items`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };
 
 export const addItem = ({ name, imageUrl, weather }) => {
   return request(`${baseUrl}/items`, {
     method: "POST",
-    headers,
+    ...headers(),
     body: JSON.stringify({
       name,
       imageUrl,
@@ -40,14 +41,16 @@ export const addItem = ({ name, imageUrl, weather }) => {
 export const removeItem = (itemId) => {
   return request(`${baseUrl}/items/${itemId}`, {
     method: "DELETE",
-    headers,
+    ...headers(),
   });
 };
 
 export const signup = ({ name, avatar, email, password }) => {
   return request(`${baseUrl}/signup`, {
     method: "POST",
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ name, avatar, email, password }),
   });
 };
@@ -55,14 +58,15 @@ export const signup = ({ name, avatar, email, password }) => {
 export const signin = ({ email, password }) => {
   return request(`${baseUrl}/signin`, {
     method: "POST",
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ email, password }),
   });
 };
 
-export const getCurrentUser = ({ token }) => {
-  const headers = protectedHeaders(token);
+export const getCurrentUser = () => {
   return request(`${baseUrl}/users/me`, {
-    headers,
+    ...headers(),
   });
 };

@@ -3,7 +3,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { defaultUserValues } from "../../utils/constants";
 
 const LoginModal = ({ isOpen, signin, handleClose, isLoading, modalType }) => {
-  const { values, setValues, handleChange, handleReset } = useForm(defaultUserValues);
+  const { values, handleChange, handleReset } = useForm(defaultUserValues);
 
   function handleSubmit(evt) {
     evt.preventDefault();
