@@ -2,8 +2,8 @@
 
 WTWR (Weather-To-Wear Recommendation) is a fullstack application that provides clothing recommendations based on real-time weather conditions. It combines a React frontend with a Node.js/Express backend to deliver a dynamic, data-driven user experience.
 
-- Frontend Repository: [https://github.com/Yournd/se_project_react_WTWR](https://github.com/Yournd/se_project_react_WTWR)
-- Backend Repository: [https://github.com/Yournd/se_project_express](https://github.com/Yournd/se_project_express)
+- Frontend Repository: [https://github.com/WyattYousey/se_project_react_WTWR](https://github.com/WyattYousey/se_project_react_WTWR)
+- Backend Repository: [https://github.com/WyattYousey/se_project_express](https://github.com/WyattYousey/se_project_express)
 
 ---
 
