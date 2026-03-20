@@ -3,11 +3,21 @@ import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
 import "./Main.css";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function Main({ onCardLike, handleCardClick, weatherData, clothingItems }) {
+function Main({ onCardLike, handleCardClick, weatherData, clothingItems, isLoggedIn }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+  const currentUser = useContext(CurrentUserContext);
 
-  const visibleItems = clothingItems.filter((item) => item.weather === weatherData.type);
+  let visibleItems = clothingItems.filter((item) => {
+    return item.weather === weatherData.type && item.owner === currentUser?._id;
+  });
+
+  if (!isLoggedIn) {
+    visibleItems = clothingItems.filter(item => {
+      return item.weather === weatherData.type && item.isDemo === true
+    })
+  }
 
   return (
     <main>

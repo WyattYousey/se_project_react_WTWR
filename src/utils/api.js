@@ -79,15 +79,15 @@ export const editUserProfile = ({ name, avatar }) => {
   });
 };
 
-export const addCardLike = ({ itemId }) => {
-  return request(`${baseUrl}/items/${itemId}/likes`, {
+export const addCardLike = (id) => {
+  return request(`${baseUrl}/items/${id}/likes`, {
     method: "PATCH",
     ...headers(),
   });
 };
 
-export const removeCardLike = ({ itemId }) => {
-  return request(`${baseUrl}/items/${itemId}/likes`, {
+export const removeCardLike = (id) => {
+  return request(`${baseUrl}/items/${id}/likes`, {
     method: "DELETE",
     ...headers(),
   });

@@ -3,7 +3,7 @@ import "./SideBar.css";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function SideBar({ handleEditProfileClick }) {
+export default function SideBar({ handleEditProfileClick, signout }) {
   const isMobile = useMediaQuery({
     query: "(max-width: 768px)",
   });
@@ -40,7 +40,9 @@ export default function SideBar({ handleEditProfileClick }) {
             <button onClick={handleEditProfileClick} className="sidebar__profile-change desktop">
               Change profile data
             </button>
-            <button className="sidebar__profile-logout desktop">Log out</button>
+            <button onClick={signout} className="sidebar__profile-logout desktop">
+              Log out
+            </button>
           </div>
         </div>
       )}

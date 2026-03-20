@@ -3,7 +3,7 @@ import ItemCard from "../ItemCard/ItemCard";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function ClothesSection({ handleAddClick, clothingItems, handleCardClick }) {
+export default function ClothesSection({ handleAddClick, clothingItems, handleCardClick, onCardLike }) {
   const currentUser = useContext(CurrentUserContext);
 
   return (
@@ -18,7 +18,9 @@ export default function ClothesSection({ handleAddClick, clothingItems, handleCa
         {clothingItems
           .filter((item) => item.owner === currentUser?._id)
           .map((item) => {
-            return <ItemCard key={item._id} item={item} onCardClick={handleCardClick} />;
+            return (
+              <ItemCard key={item._id} item={item} onCardLike={onCardLike} onCardClick={handleCardClick} />
+            );
           })}
       </ul>
     </div>

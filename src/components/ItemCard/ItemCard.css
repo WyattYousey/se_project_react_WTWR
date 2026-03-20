@@ -30,7 +30,15 @@
   align-items: center;
   background: transparent;
   border: none;
-  padding: 0;
+  padding: 3px;
+  border-radius: 5px;
+  transition: all cubic-bezier(0.895, 0.03, 0.685, 0.22) cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.like-btn:hover {
+  cursor: pointer;
+  background-color: rgb(212, 135, 209);
+  transform: scale(1.25);
 }
 
 .card__image {

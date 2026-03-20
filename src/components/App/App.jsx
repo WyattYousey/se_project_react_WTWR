@@ -49,6 +49,12 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const handleSignOut = () => {
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    setCurrentUser(null);
+  };
+
   const checkCurrentUser = () => {
     if (isLoading === false) setIsLoading(true);
     getCurrentUser()
@@ -133,6 +139,7 @@ function App() {
     editUserProfile(data)
       .then((res) => {
         setCurrentUser(res);
+        console.log(currentUser);
         resetForm();
         handleClose();
       })
@@ -193,51 +200,52 @@ function App() {
     setActiveModal("");
   };
 
+  //*Weather useEffect
   useEffect(() => {
-    checkCurrentUser();
-
     const fetchWeatherWithCoords = (coords) => {
       setIsLoading(true);
+
       getWeather(coords, apiKey)
         .then((data) => {
-          const filteredData = filterWeatherData(data);
-          setWeatherData(filteredData);
+          setWeatherData(filterWeatherData(data));
         })
         .catch(console.error)
-        .finally(() => {
-          setIsLoading(false);
-        });
+        .finally(() => setIsLoading(false));
     };
-
-    // indicate that location detection is in progress until we fetch weather
-    setIsLoading(true);
 
     if (typeof navigator !== "undefined" && "geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const coords = {
+          fetchWeatherWithCoords({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
-          };
-          fetchWeatherWithCoords(coords);
+          });
         },
         (error) => {
           console.error("Geolocation error:", error);
           fetchWeatherWithCoords(defaultCoordinates);
         },
-        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 },
       );
     } else {
-      // Geolocation not supported, use fallback
       fetchWeatherWithCoords(defaultCoordinates);
     }
+  }, []);
+
+  //* Items useEffect
+  useEffect(() => {
+    setIsLoading(true);
 
     getItems()
       .then((data) => {
-        data.reverse();
-        setClothingItems(data);
+        setClothingItems(data.reverse());
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  //*Auth useEffect
+  useEffect(() => {
+    checkCurrentUser();
   }, []);
 
   return (
@@ -262,6 +270,7 @@ function App() {
                 path="/"
                 element={
                   <Main
+                    isLoggedIn={isLoggedIn}
                     onCardLike={handleCardLike}
                     handleCardClick={handleCardClick}
                     weatherData={weatherData}
@@ -274,6 +283,8 @@ function App() {
                 element={
                   <ProtectedRoute isLoggedIn={isLoggedIn}>
                     <Profile
+                      signout={handleSignOut}
+                      onCardLike={handleCardLike}
                       handleEditProfileClick={handleEditProfileClick}
                       handleAddClick={handleAddClick}
                       clothingItems={clothingItems}
@@ -321,7 +332,6 @@ function App() {
             handleClose={handleClose}
           />
           <ProfileMobileModal
-            currentUser={currentUser}
             isLoggedIn={isLoggedIn}
             modalType={activeModal}
             isOpen={activeModal === "mobile"}

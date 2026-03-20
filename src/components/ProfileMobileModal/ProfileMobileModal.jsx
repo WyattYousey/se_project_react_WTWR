@@ -12,6 +12,7 @@ export default function ProfileMobileModal({
   handleClose,
   onAddClick,
   modalType,
+  signout
 }) {
   const currentUser = useContext(CurrentUserContext);
   const isLoggedIn = !!currentUser;
