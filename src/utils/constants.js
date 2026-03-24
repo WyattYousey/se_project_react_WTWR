@@ -93,4 +93,7 @@ export const defaultCoordinates = {
   longitude: -94.61,
 };
 
+//Fallback apikey in case one is not specified 
+export const fallbackApiKey = 'db701a858759818aedce5a8653525ccc';
+
 export const screenSize = window.innerWidth;

@@ -27,6 +27,7 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import fallbackApiKey from '../../utils/constants.js';
 
 import "./App.css";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
@@ -46,7 +47,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const apiKey = import.meta.env.VITE_API_KEY;
+  const apiKey = import.meta.env.VITE_API_KEY || fallbackApiKey;
 
   const toggleLoginAndSignoutModal = () => {
     activeModal === "user-login" ? setActiveModal("add-user") : setActiveModal("user-login");
