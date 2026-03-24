@@ -27,7 +27,7 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import fallbackApiKey from '../../utils/constants.js';
+import { fallbackApiKey } from "../../utils/constants.js";
 
 import "./App.css";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";

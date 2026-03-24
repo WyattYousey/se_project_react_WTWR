@@ -31,26 +31,26 @@ const EditProfileModal = ({ isOpen, editProfile, handleClose, isLoading, modalTy
       onSubmit={handleSubmit}
       title="Change profile data"
     >
-      <label htmlFor="name" className="modal__label">
+      <label className="modal__label">
         Name{" "}
         <input
           type="text"
           name="name"
           className="modal__input"
-          id="name"
+          id="editProfileName"
           placeholder="Name"
           value={values.name}
           onChange={handleChange}
           required
         />
       </label>
-      <label htmlFor="avatar" className="modal__label">
+      <label className="modal__label">
         Avatar{" "}
         <input
           type="url"
           name="avatar"
           className="modal__input"
-          id="avatar"
+          id="editProfileAvatar"
           placeholder="Avatar"
           value={values.avatar}
           onChange={handleChange}

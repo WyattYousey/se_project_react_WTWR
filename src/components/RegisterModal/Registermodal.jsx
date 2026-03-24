@@ -22,51 +22,51 @@ const RegisterModal = ({ isOpen, signup, handleClose, isLoading, modalType, togg
       onSubmit={handleSubmit}
       title="Sign Up"
     >
-      <label htmlFor="email" className="modal__label">
+      <label className="modal__label">
         Email{" "}
         <input
           type="email"
           name="email"
           className="modal__input"
-          id="email"
+          id="registerEmail"
           placeholder="Email"
           value={values.email}
           onChange={handleChange}
           required
         />
       </label>
-      <label htmlFor="password" className="modal__label">
+      <label className="modal__label">
         Password{" "}
         <input
           type="password"
           name="password"
           className="modal__input"
-          id="password"
+          id="registerPassword"
           placeholder="Password"
           value={values.password}
           onChange={handleChange}
           required
         />
       </label>
-      <label htmlFor="name" className="modal__label">
+      <label className="modal__label">
         Name{" "}
         <input
           type="text"
           name="name"
           className="modal__input"
-          id="name"
+          id="registerName"
           placeholder="Name"
           value={values.name}
           onChange={handleChange}
         />
       </label>
-      <label htmlFor="avatar" className="modal__label">
+      <label className="modal__label">
         Avatar URL{" "}
         <input
           type="url"
           name="avatar"
           className="modal__input"
-          id="avatar"
+          id="registerAvatar"
           placeholder="Avatar URL"
           value={values.avatar}
           onChange={handleChange}

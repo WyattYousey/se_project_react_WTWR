@@ -3,7 +3,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { defaultItemValues } from "../../utils/constants";
 
 const AddItemModal = ({ isOpen, handleAddItem, handleClose, isLoading, modalType }) => {
-  const { values, setValues, handleChange, handleReset } = useForm(defaultItemValues);
+  const { values, handleChange, handleReset } = useForm(defaultItemValues);
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -20,7 +20,7 @@ const AddItemModal = ({ isOpen, handleAddItem, handleClose, isLoading, modalType
       onSubmit={handleSubmit}
       title="New garment"
     >
-      <label htmlFor="name" className="modal__label">
+      <label className="modal__label">
         Name{" "}
         <input
           type="text"
@@ -33,7 +33,7 @@ const AddItemModal = ({ isOpen, handleAddItem, handleClose, isLoading, modalType
           required
         />
       </label>
-      <label htmlFor="imageUrl" className="modal__label">
+      <label className="modal__label">
         Image{" "}
         <input
           type="url"
@@ -49,7 +49,7 @@ const AddItemModal = ({ isOpen, handleAddItem, handleClose, isLoading, modalType
       <fieldset className="modal__fieldset">
         <legend className="modal__legend">Select the weather type:</legend>
 
-        <label htmlFor="hot" className="modal__label modal__label_type_radio">
+        <label className="modal__label modal__label_type_radio">
           <input
             checked={values.weather === "hot"}
             value="hot"
@@ -62,7 +62,7 @@ const AddItemModal = ({ isOpen, handleAddItem, handleClose, isLoading, modalType
           Hot
         </label>
 
-        <label htmlFor="warm" className="modal__label modal__label_type_radio">
+        <label className="modal__label modal__label_type_radio">
           <input
             checked={values.weather === "warm"}
             value="warm"
@@ -75,7 +75,7 @@ const AddItemModal = ({ isOpen, handleAddItem, handleClose, isLoading, modalType
           Warm
         </label>
 
-        <label htmlFor="cold" className="modal__label modal__label_type_radio">
+        <label className="modal__label modal__label_type_radio">
           <input
             checked={values.weather === "cold"}
             value="cold"

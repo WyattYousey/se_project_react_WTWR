@@ -22,26 +22,26 @@ const LoginModal = ({ isOpen, signin, handleClose, isLoading, modalType, toggleM
       onSubmit={handleSubmit}
       title="Log in"
     >
-      <label htmlFor="email" className="modal__label">
+      <label className="modal__label">
         Email{" "}
         <input
           type="email"
           name="email"
           className="modal__input"
-          id="email"
+          id="loginEmail"
           placeholder="Email"
           value={values.email}
           onChange={handleChange}
           required
         />
       </label>
-      <label htmlFor="password" className="modal__label">
+      <label className="modal__label">
         Password{" "}
         <input
           type="password"
           name="password"
           className="modal__input"
-          id="password"
+          id="loginPassword"
           placeholder="Password"
           value={values.password}
           onChange={handleChange}
