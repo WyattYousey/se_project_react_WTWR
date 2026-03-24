@@ -11,6 +11,7 @@ function ModalWithForm({
   onSubmit,
   modalType,
   secondaryButtonText,
+  toggleModals
 }) {
   return (
     <Modal isOpen={isOpen} onClose={handleClose} modalType={modalType}>
@@ -22,7 +23,7 @@ function ModalWithForm({
             {buttonText}
           </button>
           {modalType === "add-user" || modalType === "user-login" ? (
-            <button type="button" className="modal__log_in_btn">
+            <button onClick={toggleModals} type="button" className="modal__log_in_btn">
               {secondaryButtonText}
             </button>
           ) : (

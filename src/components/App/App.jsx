@@ -9,14 +9,12 @@ import {
   addItem,
   getItems,
   removeItem,
-  signup,
-  signin,
   getCurrentUser,
   editUserProfile,
   removeCardLike,
   addCardLike,
 } from "../../utils/api";
-import { apiKey } from "../../utils/constants";
+import { signin, signup } from "../../utils/auth";
 
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -25,7 +23,7 @@ import Footer from "../Footer/Footer";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
 import ProfileMobileModal from "../ProfileMobileModal/ProfileMobileModal";
-import RegisterModal from "../RegisterModal/Registermodal";
+import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
@@ -48,6 +46,11 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const apiKey = import.meta.env.VITE_API_KEY;
+
+  const toggleLoginAndSignoutModal = () => {
+    activeModal === "user-login" ? setActiveModal("add-user") : setActiveModal("user-login");
+  };
 
   const handleSignOut = () => {
     localStorage.removeItem("jwt");
@@ -139,7 +142,6 @@ function App() {
     editUserProfile(data)
       .then((res) => {
         setCurrentUser(res);
-        console.log(currentUser);
         resetForm();
         handleClose();
       })
@@ -302,6 +304,7 @@ function App() {
             handleClose={handleClose}
             signup={handleRegistration}
             isLoading={isLoading}
+            toggleModals={toggleLoginAndSignoutModal}
           />
           <LoginModal
             modalType={activeModal}
@@ -309,6 +312,7 @@ function App() {
             handleClose={handleClose}
             signin={login}
             isLoading={isLoading}
+            toggleModals={toggleLoginAndSignoutModal}
           />
           <EditProfileModal
             modalType={activeModal}

@@ -93,6 +93,4 @@ export const defaultCoordinates = {
   longitude: -94.61,
 };
 
-export const apiKey = "db701a858759818aedce5a8653525ccc";
-
 export const screenSize = window.innerWidth;

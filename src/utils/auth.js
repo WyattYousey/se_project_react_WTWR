@@ -1,0 +1,21 @@
+import { baseUrl, request } from "./api";
+
+export const signup = ({ name, avatar, email, password }) => {
+  return request(`${baseUrl}/signup`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name, avatar, email, password }),
+  });
+};
+
+export const signin = ({ email, password }) => {
+  return request(`${baseUrl}/signin`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
+};

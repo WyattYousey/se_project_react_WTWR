@@ -2,7 +2,7 @@ import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { defaultUserValues } from "../../utils/constants";
 
-const RegisterModal = ({ isOpen, signup, handleClose, isLoading, modalType }) => {
+const RegisterModal = ({ isOpen, signup, handleClose, isLoading, modalType, toggleModals }) => {
   const { values, setValues, handleChange, handleReset } = useForm(defaultUserValues);
 
   function handleSubmit(evt) {
@@ -16,6 +16,7 @@ const RegisterModal = ({ isOpen, signup, handleClose, isLoading, modalType }) =>
       name="add-user"
       buttonText={isLoading ? "Signing you up..." : "Next"}
       secondaryButtonText="or Login"
+      toggleModals={toggleModals}
       isOpen={isOpen}
       handleClose={handleClose}
       onSubmit={handleSubmit}

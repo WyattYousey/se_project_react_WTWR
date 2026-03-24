@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3001";
+export const baseUrl = "http://localhost:3001";
 
 function headers() {
   const token = localStorage.getItem("jwt");
@@ -14,7 +14,7 @@ export const handleServerResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
 };
 
-const request = (url, options) => {
+export const request = (url, options) => {
   return fetch(url, options).then(handleServerResponse);
 };
 
@@ -42,26 +42,6 @@ export const removeItem = (itemId) => {
   return request(`${baseUrl}/items/${itemId}`, {
     method: "DELETE",
     ...headers(),
-  });
-};
-
-export const signup = ({ name, avatar, email, password }) => {
-  return request(`${baseUrl}/signup`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ name, avatar, email, password }),
-  });
-};
-
-export const signin = ({ email, password }) => {
-  return request(`${baseUrl}/signin`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password }),
   });
 };
 

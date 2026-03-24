@@ -5,7 +5,8 @@ import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function ItemCard({ item, onCardClick, onCardLike }) {
-  let validLikeBtn = item.likes.length === 0 ? likeBtn : likeBtnFilled;
+  const isLiked = item.likes.some((id) => id === currentUser?._id);
+  let validLikeBtn = isLiked ? likeBtnFilled : likeBtn;
   const currentUser = useContext(CurrentUserContext);
   const isLoggedIn = !!currentUser;
 
