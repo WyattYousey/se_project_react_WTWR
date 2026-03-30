@@ -1,4 +1,5 @@
-export const baseUrl = "http://localhost:3001";
+export const baseUrl = ProcessingInstruction.env.NODE_ENV === "production" ? "https://api.whatstheweather.flowtemp.ro" :
+"http://localhost:3001";
 
 function headers() {
   const token = localStorage.getItem("jwt");
