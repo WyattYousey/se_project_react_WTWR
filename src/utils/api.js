@@ -1,5 +1,7 @@
-export const baseUrl = ProcessingInstruction.env.NODE_ENV === "production" ? "https://api.whatstheweather.flowtemp.ro" :
-"http://localhost:3001";
+const { VITE_NODE_ENV } = import.meta.env;
+
+export const baseUrl =
+  VITE_NODE_ENV === "production" ? "https://api.whatstheweather.flowtemp.ro" : "http://localhost:3001";
 
 function headers() {
   const token = localStorage.getItem("jwt");
